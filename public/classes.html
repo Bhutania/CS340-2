@@ -1,0 +1,99 @@
+<!Doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>University Database</title>
+        <link rel ="stylesheet" href="style.css" media="screen">
+    </head>
+
+
+    <body>
+        <header>
+            <h1 class="Class Title">Class Page</h1>
+        </header>
+        <a href="./index.html">Return to Index</a>
+        <p>
+            This page will contain all the class pages. Each class will get a table, which contains the course ID, Course name, professor teaching the course, and the
+            department of the course. The tables will be searchable by ID and name. Classes can be added and deleted on this page. WIP.
+        </p>
+
+        <table border="1px solid black">
+            <tbody>
+                <td>
+                    Class name
+                </td>
+                <td>
+                    Class Reference Number
+                </td>
+                <td>
+                    Building Class is taught in
+                </td>
+                <td>
+                    Professor teaching Course
+                </td>
+                <td>
+                    Department
+                </td>
+            </tbody>
+            <tbody>
+                <th>
+                    Intro to Databases
+                </th>
+                <th>
+                    11111
+                </th>
+                <th>
+                    Kelley 001
+                </th>
+                <th>
+                    N/A
+                </th>
+                <th>
+                    Computer Science
+                </th>
+            </tbody>
+        </table>
+
+        <br>
+        
+        <form style="border: 1px solid black">
+            <legend>Create Class</legend>
+            <br>
+            Class name:
+            <br>
+            <input id="CCname" type="text">
+            <br>
+            Class Reference Number:
+            <br>
+            <input id="CCCRN" type="text">
+            <br>
+            Building Class is taught in:
+            <br>
+            <input id="CCBuild" type="text">
+            <br>
+            Professor Teaching:
+            <br>
+            <input id="CCProf" type="text">
+            <br>
+            Department:
+            <br>
+            <input id="CCDept" type="text">
+            <button>Submit</button>
+        </form>
+
+        <br>
+        <br>
+
+        <form style="border:1px solid black">
+            <legend>Delete Class</legend>
+            <br>
+            Class Reference Number:
+            <br>
+            <input id="CDRN" type="text">
+            <button>Submit</button>
+        </form>
+        <br>
+        <a href="./index.html">Return to Index</a>
+
+    </body>
+</html>

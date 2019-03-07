@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>University Student Page</title> 
+    </head>
+    <h1>Students Page</h1>
+    <h3>Login:</h3>
+    <form id="login" action="/students/login" method="GET">
+    Id Number: <input id= 'student_id' type= 'number' name= 'student_login_id_value' value="">
+    <input type = "submit" value="Login">
+    </form>
+    <br>
+    <h3>Sign Up:</h3>
+    <form id="signup" action='/students' method="POST">
+    Name: <input id='name' type= "text" name ='student_signup_name' value =""> <br>
+    Major: <input id='major' type="text" name ='student_signup_major' value =''><br>
+    Residence Hall <select name='student_signup_building'>
+        {{#each buildings}}
+        <option value="{{Name}}">{{Name}}</option>
+        {{/each}}
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+    <br>
+    <h3>All Students</h3>
+    <table>
+        <thead>
+            <th>
+                Name
+            </th>
+            <th>
+                Major
+            </th>
+            <th>
+                Residence Hall
+            </th>
+        </thead>
+        <tbody>
+            {{#each students}}
+            <tr>
+                <td>
+                    {{Name}}
+                </td>
+                <td>
+                    {{Major}}
+                </td> 
+                <td>
+                    {{Building}}
+                </td> 
+            </tr>
+            {{/each}}
+        </tbody> 
+    </table>
+</html>

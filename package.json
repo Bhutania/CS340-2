@@ -1,0 +1,20 @@
+{
+  "name": "University Database",
+  "version": "1.0.0",
+  "description": "University Datbase using express and node.js backed by a MariaDB sql server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arnav Bhutani, Ilania Javier",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.2",
+    "express-session": "^1.11.3",
+    "handlebars": "^4.1.0",
+    "mysql": "^2.16.0",
+    "path": "^0.12.7"
+  }
+}

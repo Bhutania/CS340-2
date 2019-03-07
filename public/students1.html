@@ -1,0 +1,124 @@
+<!Doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>University Database</title>
+        <link rel ="stylesheet" href="style.css" media="screen">
+    </head>
+
+
+    <body>
+        <header>
+            <h1 class="Student Title">Student Page</h1> 
+        </header>
+
+        <a href="./index.html">Return to Index</a>
+        <p>
+            This page will require students to login or sign up. Upon login, the page will allow students to access their data. Otherwise they must create 
+            new student profiles. To create a profile, each student will enter their name, major and building of residence, to be added to be the database.
+            Login will be based on unique ID number. Students are also able to add/drop/view classes after login. Students may be deleted from this page. WIP.
+        </p>
+        <br>
+        <p>
+            Text entry fields for the following types of data: ID number, name and searchable dropdown menus for the following types of data: major, building of residence.
+
+        </p>
+        <form style="border:1px solid black">
+            <legend>Login</legend>
+            Student ID:
+            <input type="text">
+            <button class="loginButton">Login</button>
+            <br>
+        </form>
+
+        <br>
+
+        <form style="border:1px solid black">
+            <legend>Student Creation</legend>
+            Name (First Last):
+            <br>
+            <input type="text">
+            <br>
+            Major:
+            <br>
+            <input type="text" placeholder="Major..." id="Maj">
+            <br>
+            Residence hall:
+            <br>
+            <input type="text" placeholder="Residence Hall" id=Stdbuild>
+            <!-- <div class = dropdown>
+                <button class="dropbutton">Dropdown</button>
+                <div id="dd" class ="ddcont">
+                    <input type="text" placeholder="Residence Hall..." id="resInp">
+                    <a>Finley</a>
+                    <a>Bloss</a>
+                    <a>West</a>
+                    <a>...</a>
+                </div>
+            </div> -->
+            <button class="signupButton">Sign Up</button>
+        </form>
+        
+        <br>
+        <form style="border:1px solid black">
+                <legend>Student Update</legend>
+                Search:
+                <br>
+                <input type="text" placeholder="Professor ID" id=pSearch>
+                <button>Submit</button> 
+                <br>
+                <br>
+                <legend>Modify Professor</legend>
+                Name:
+                <br>
+                <input type="text" placeholder="Professor Name" id=puname>
+                <br>
+                Major:
+                <br>
+                <input type="text" placeholder="Professor Department" id=puDepartment>
+                <br>
+                Residence Hall:
+                <br>
+                <input type="text" placeholder="Professor Building" id=puBuilding>
+                <button>Submit</button>
+                <br>
+    
+            </form>
+        <br>
+
+        <form style ="border:1px solid black">
+            <legend>Delete Student</legend>
+            Student ID:
+            <br>
+            <input type="text">
+            <button class-"deleteButton">Submit</button>
+        </form>
+        <p>
+        </p>
+        <br>
+        <p>
+            classes for which the students are assigned will be listed here by name and course number after login.
+        </p>
+
+        <form>
+            <table border="1px solid black">
+                <tbody class="student-courses">
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Course Reference Number
+                    </th>
+                </tbody>
+                <td>
+                     Intro to databases    
+                </td>
+                <td>
+                     11111   
+                </td>
+            </table>
+        </form>
+        <br>
+        <a href="./index.html">Return to Index</a>
+    </body>
+</html>

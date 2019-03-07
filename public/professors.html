@@ -1,0 +1,119 @@
+<!Doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>University Database</title>
+        <link rel ="stylesheet" href="style.css" media="screen">
+    </head>
+
+
+    <body>
+        <header>
+            <h1 class="Professor Title">Professor Page</h1> 
+        </header>
+        <a href="./index.html">Return to Index</a>
+        <p>
+            This page will contain all the professor data, and will allow professors to login or create new professor profiles. 
+            Each professor will enter their ID number, name, department, and office building, and tenure status to be added to be the database. Login will be 
+            based on unique ID number. Professors may add/drop/view courses after logging in. Professors can also delete their profile after logging in. WIP.
+        </p>
+        <br>
+        <p>
+            Text entry fields for the following types of data: Login, ID number, name. Searchable dropdown menus for the following types of data: department, office building, tenure status.
+
+        </p>
+        <form style="border:1px solid black">
+            <legend>Login</legend>
+            Professor ID:
+            <br>
+            <input type="text">
+            <button class="loginButton">Login</button>
+            <br>
+        </form>
+        <br>
+        <form style="border:1px solid black">
+            <legend>Signup</legend>
+            Name:
+            <br>
+            <input type="text" placeholder="First Last">
+            <br>
+            Department:
+            <br>
+            <input type="text" placeholder="Major..." id="Maj">
+            <br>
+            Office Building:
+            <br>
+            <input type="text" placeholder="Building Name" id="pBuild">
+            <!-- <div class = dropdown>
+                <button class="dropbutton">Dropdown</button>
+                <div id="dd" class ="ddcont">
+                    <input type="text" placeholder="Residence Hall..." id="resInp">
+                    <a>Johnson</a>
+                    <a>Kelley</a>
+                    <a>Dearborn</a>
+                    <a>...</a>
+                </div>
+            </div> --->
+            <br>
+            Boss:
+             <br>
+            <input type="text">
+            <button class="signupButton">Signup</button>
+        
+        </form>
+        <br>
+        <form style="border:1px solid black">
+            <legend>Professor Update</legend>
+            Search for Professors:
+            <br>
+            <input type="text" placeholder="Professor ID" id=pSearch>
+            <button>Submit</button> 
+            <br>
+            <br>
+            <legend>Modify Professor</legend>
+            Name:
+            <br>
+            <input type="text" placeholder="Professor Name" id=puname>
+            <br>
+            Department:
+            <br>
+            <input type="text" placeholder="Professor Department" id=puDepartment>
+            <br>
+            Office Building:
+            <br>
+            <input type="text" placeholder="Professor Building" id=puBuilding>
+            <br>
+            Boss:
+            <br>
+            <input type="text" placeholder="Professor Boss" id=puBoss>
+            <button>Submit</button>
+            <br>
+
+        </form>
+
+        <br>
+        <p>
+            Classes that the professors are teaching will show up after login.
+        </p>
+        <form>
+            <table border="1px solid black">
+                <tbody class="student-courses">
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Course Reference Number
+                    </th>
+                </tbody>
+                <td>
+                        Intro to databases    
+                </td>
+                <td>
+                        11111   
+                </td>
+            </table>
+        </form>
+        <br>
+        <a href="./index.html">Return to Index</a>
+    </body>
+</html>
