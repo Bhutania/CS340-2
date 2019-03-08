@@ -4,7 +4,7 @@ var router = express.Router();
 //screen multiplexer
 
 function getStudentClasses(res, mysql, context, id, complete) {
-    var sql = "SELECT C.course_name AS Name, C.course_id AS `Course Reference Number` FROM class C INNER JOIN students_classes SC ON SC.class_id = C.course_id WHERE SC.student_id = ?"
+    var sql = "SELECT C.course_name AS Name, C.course_id AS id FROM class C INNER JOIN students_classes SC ON SC.class_id = C.course_id WHERE SC.student_id = ?"
     var inserts = [id];
     mysql.pool.query(sql, inserts, function(error, results, fields) {
         if(error) {
@@ -12,7 +12,7 @@ function getStudentClasses(res, mysql, context, id, complete) {
             res.end();  
         }
         else {
-            context.classes = results[0];
+            context.classes = results;
             complete();
         }
     });
@@ -63,7 +63,7 @@ function getBuildings(res, mysql, context, complete) {
 }
 
 function getClasses(res, mysql, id, context, complete) {
-    sql = "SELECT SC.student_id as student_id, SC.class_id as id, C.course_name as Name FROM students_classes SC INNER JOIN class C ON C.course_id = SC.class_id WHERE student_id = ?";
+    sql = "SELECT C.course_name as Name, C.course_id AS id FROM class C";
     insert = [id];
     mysql.pool.query(sql, insert, function(error, results, fields){
         if(error) {
@@ -110,23 +110,32 @@ router.get('/login', function(req, res){
     }
 });
 
-console.log("test");
 router.post('/', function(req, res){
-    console.log('test1');
     var mysql = req.app.get('mysql');
     var sql = "INSERT INTO student (name, major, building) VALUES (?, ?, ?)";
     var inserts = [req.body.student_signup_name, req.body.student_signup_major, req.body.student_signup_building];
     sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
         if (error) {
-            console.log(JSON.stringify(error));
             res.write(JSON.stringify(error));
             res.end();
         }
         else {
-            console.log('test2');
             res.redirect('/students');
         }
     });
 });
-console.log("test3");
+
+router.post('/AddCourse', function(req, res){
+    var mysql = req.app.get('mysql');
+    var sql = "INSERT INTO students_classes VALUES (?, ?)"
+    var inserts = [req.body.student_id, req.body.course_id]
+    sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.redirect('/students/login?student_login_id_value=' + req.body.student_id);
+        }
+    });
+});
 module.exports = router;

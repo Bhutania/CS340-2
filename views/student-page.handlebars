@@ -16,7 +16,7 @@
             </th>
         </thead>
         <tbody>
-            {{#each class}}
+            {{#each classes}}
             <tr>
                 <td>
                     {{Name}}
@@ -33,11 +33,11 @@
     </table>
 
     <h3>Add Course</h3>
-    <form id="add_course" action="/student-page.js" method="POST">
+    <form id="add_course" action="/students/AddCourse" method="POST">
         Student id: <input name="student_id" value="{{student.id}}"><br>
         Course: <select name="course_id">
             {{#each class}}
-            <option value="{{id}}">{{id}}</option>
+            <option value="{{id}}">{{Name}}</option>
             {{/each}}
         </select>
         <input type="submit" value="Submit">
