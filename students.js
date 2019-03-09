@@ -20,7 +20,7 @@ function getStudentClasses(res, mysql, context, id, complete) {
 
 
 function getStudents(res, mysql, context, complete) {
-    var sql = "SELECT S.name AS Name, S.major AS Major, S.building AS Building FROM student S"
+    var sql = "SELECT S.id as id, S.name AS Name, S.major AS Major, S.building AS Building FROM student S"
     mysql.pool.query(sql, function(error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
@@ -42,8 +42,8 @@ function getStudent(res, mysql, context, id, complete) {
             res.end();
         } 
         else {
-        context.student = results[0];
-        complete();
+            context.student = results[0];
+            complete();
         }
     });
 }
@@ -81,7 +81,7 @@ function getClasses(res, mysql, id, context, complete) {
 router.get('/', function(req, res){
     var callbackCount = 0;
     var context = {};
-    // context.jsscripts
+    context.jsscripts = ["deleteStudent.js"];
     var mysql = req.app.get('mysql');
     getStudents(res, mysql, context, complete);
     getBuildings(res, mysql, context, complete);
@@ -98,6 +98,7 @@ router.get('/', function(req, res){
 router.get('/login', function(req, res){
     callbackCount = 0;
     var context = {};
+    context.jsscripts = ["deleteSC.js"];
     var mysql = req.app.get('mysql');
     getStudentClasses(res, mysql, context, req.query.student_login_id_value, complete);
     getStudent(res, mysql, context, req.query.student_login_id_value, complete);
@@ -137,5 +138,35 @@ router.post('/AddCourse', function(req, res){
             res.redirect('/students/login?student_login_id_value=' + req.body.student_id);
         }
     });
+});
+
+router.delete('/:id', function(req, res){
+    var mysql = req.app.get('mysql');
+    var sql = "DELETE FROM student WHERE student.id = ?"
+    var inserts = [req.params.id];
+    sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.status(400);
+            res.end();
+        } else {
+            res.status(202).end();
+        }
+    })
+});
+
+router.delete('/login/:cid/:sid', function(req, res){
+    var mysql = req.app.get('mysql');
+    var sql = "DELETE FROM students_classes WHERE student_id = ? AND class_id = ?"
+    var inserts = [req.params.sid,req.params.cid];
+    sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.status(400);
+            res.end();
+        } else {
+            res.status(202).end();
+        }
+    })
 });
 module.exports = router;

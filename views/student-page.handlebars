@@ -1,46 +1,44 @@
-<html>
-    <h1>{{student.name}}'s Page</h1>
+<h1>{{student.name}}'s Page</h1>
 
-    Id number: {{student.id}} <br>
-    major: {{student.major}} <br>
-    Building of Residence: {{student.building}} <br>
+Id number: {{student.id}} <br>
+major: {{student.major}} <br>
+Building of Residence: {{student.building}} <br>
 
-    <h3>Enrolled Classes:</h3>
-    <table>
-        <thead>
-            <th>
-                Course Name
-            </th>
-            <th>
-                Course Reference Number
-            </th>
-        </thead>
-        <tbody>
-            {{#each classes}}
-            <tr>
-                <td>
-                    {{Name}}
-                </td>
-                <td>
-                    {{id}}
-                </td>
-                <td>
-                    <button onclick="deleteClass({{id}})">Drop</button>
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
+<h3>Enrolled Classes:</h3>
+<table>
+    <thead>
+        <th>
+            Course Name
+        </th>
+        <th>
+            Course Reference Number
+        </th>
+    </thead>
+    <tbody>
+        {{#each classes}}
+        <tr>
+            <td>
+                {{Name}}
+            </td>
+            <td>
+                {{id}}
+            </td>
+            <td>
+                <button onclick="deleteClass({{../student.id}},{{id}})">Drop</button>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
 
-    <h3>Add Course</h3>
-    <form id="add_course" action="/students/AddCourse" method="POST">
-        Student id: <input name="student_id" value="{{student.id}}"><br>
-        Course: <select name="course_id">
-            {{#each class}}
-            <option value="{{id}}">{{Name}}</option>
-            {{/each}}
-        </select>
-        <input type="submit" value="Submit">
-    </form>
-    <br>
-</html>
+<h3>Add Course</h3>
+<form id="add_course" action="/students/AddCourse" method="POST">
+    Student id: <input name="student_id" value="{{student.id}}"><br>
+    Course: <select name="course_id">
+        {{#each class}}
+        <option value="{{id}}">{{Name}}</option>
+        {{/each}}
+    </select>
+    <input type="submit" value="Submit">
+</form>
+<br>
