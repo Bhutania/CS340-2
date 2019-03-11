@@ -140,6 +140,20 @@ router.post('/AddCourse', function(req, res){
     });
 });
 
+router.post('/Modify', function(req, res){
+    var mysql = req.app.get('mysql');
+    var sql = 'UPDATE student SET name = ?, major = ?, building = ? WHERE id = ?'
+    var inserts = [req.body.student_name, req.body.student_major, req.body.stu_residence, req.body.student_id];
+    sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.redirect('/students/login?student_login_id_value=' + req.body.student_id);
+        }
+    })
+})
+
 router.delete('/:id', function(req, res){
     var mysql = req.app.get('mysql');
     var sql = "DELETE FROM student WHERE student.id = ?"

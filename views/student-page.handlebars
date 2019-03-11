@@ -42,3 +42,13 @@ Building of Residence: {{student.building}} <br>
     <input type="submit" value="Submit">
 </form>
 <br>
+
+<h3>Modify Student</h3>
+<form id='modify_student' action='/students/Modify' method="POST">
+    Student id: {{student.id}} <br>
+    <input type = "hidden" name = 'student_id' value = '{{student.id}}'<br>
+    Name: <input name='student_name' type="text" value='{{student.name}}'> <br>
+    Major: <input name="student_major" type="text" value='{{student.major}}'><br>
+    Building of Residence: <input name = 'stu_residence' type="text" value= '{{student.building}}'><br>
+    <input type='submit' value="Submit">
+</form> 
