@@ -1,0 +1,46 @@
+<h1>All Professors</h1>
+<br>
+<h3>Sign Up:</h3>
+<form id="signup" action='/professors' method="POST">
+Name: <input id='name' type= "text" name ='student_signup_name' value =""> <br>
+Major: <input id='major' type="text" name ='student_signup_major' value =''><br>
+Residence Hall <select name='student_signup_building'>
+    {{#each buildings}}
+    <option value="{{Name}}">{{Name}}</option>
+    {{/each}}
+    </select>
+    <input type="submit" value="Submit">
+</form>
+<br>
+<h3>All Professors</h3>
+<table>
+    <thead>
+        <th>
+            Name
+        </th>
+        <th>
+            Major
+        </th>
+        <th>
+            Residence Hall
+        </th>
+    </thead>
+    <tbody>
+        {{#each professors}}
+        <tr>
+            <td>
+                <a href="professors/{{id}}">{{name}}</a>
+            </td>
+            <td>
+                {{Major}}
+            </td> 
+            <td>
+                {{Building}}
+            </td>
+            <td>
+                <button onclick="deleteStudent({{id}})">Remove</button>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody> 
+</table>
