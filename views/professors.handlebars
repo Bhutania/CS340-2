@@ -1,0 +1,58 @@
+<h1>Professors Page</h1>
+<h3>Login:</h3>
+<form id="login" action="/professors/login" method="GET">
+Id Number: <input id= 'professor_id' type= 'number' name= 'professor_login_id_value' value="">
+<input type = "submit" value="Login">
+</form>
+<br>
+<h3>Sign Up:</h3>
+<form id="signup" action='/professors' method="POST">
+Name: <input id='name' type= "text" name ='professor_signup_name' value =""> <br>
+College: <input id='college' type="text" name ='professor_signup_college' value =''><br>
+Tenured: <input id='tenured' type="text" name ='professor_signup_tenured' value=''><br>
+Building <select name='professor_signup_building'>
+    {{#each buildings}}
+    <option value="{{Name}}">{{Name}}</option>
+    {{/each}}
+    </select>
+    <input type="submit" value="Submit">
+</form>
+<br>
+<h3>All Professors</h3>
+<table>
+    <thead>
+        <th>
+            Name
+        </th>
+        <th>
+            College
+        </th>
+        <th>
+            Tenured
+        </th>
+	<th>
+	    Building
+	</th>
+    </thead>
+    <tbody>
+        {{#each professors}}
+        <tr>
+            <td>
+                {{Name}}
+            </td>
+            <td>
+                {{College}}
+            </td> 
+            <td>
+	        {{Tenured}}
+	    </td>
+	    <td>
+                {{Building}}
+            </td>
+            <td>
+                <button onclick="deleteProfessor({{id}})">Remove</button>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody> 
+</table>
