@@ -43,7 +43,7 @@ function getProfessor(res, mysql, id, context, complete) {
 }
 
 function getClasses(res, mysql, id, context, complete) {
-    var sql = "SELECT C.course_id as id, C.course_name as name FROM class C INNER JOIN professor P ON P.id = C.professor"
+    var sql = "SELECT C.course_id as id, C.course_name as name FROM class C INNER JOIN professor P ON P.id = C.professor WHERE P.id = ?"
     var inserts =[id];
     mysql.pool.query(sql, inserts, function(error, results, fields){
         if (error) {
@@ -54,6 +54,19 @@ function getClasses(res, mysql, id, context, complete) {
             complete();
         }
     });
+}
+
+function getClass(res, mysql, context, complete) {
+    var sql = "SELECT C.course_id as id, C.course_name as name FROM class C";
+    mysql.pool.query(sql, function(error, results, fields){
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            context.classes = results;
+            complete();
+        }
+    })
 }
 
 
@@ -81,9 +94,12 @@ router.get('/:id', function(req, res){
     var mysql = req.app.get('mysql');
     getProfessor(res, mysql, req.params.id, context, complete);
     getClasses(res, mysql, req.params.id, context, complete);
+    getProfessors(res, mysql, context, complete);
+    getBuildings(res, mysql, context, complete);
+    getClass(res, mysql, context, complete);
     function complete(){
         callbackCount++;
-        if(callbackCount >= 2){
+        if(callbackCount >= 5){
             if(context.professor.tenured == 0) {
                 context.professor.tenured = "Untenured";
             } else {
@@ -109,9 +125,24 @@ router.post('/', function(req, res){
     });
 });
 
+router.post('/Classes', function(req, res){
+    var mysql = req.app.get('mysql');
+    var sql = "UPDATE class SET professor = ? WHERE course_id = ?"
+    var inserts = [req.body.professor_id, req.body.professor_class];
+    sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.status(400);
+            res.end();
+        } else {
+            res.redirect('/professors/'+req.body.professor_id);
+        }
+    });
+});
+
 router.delete('/:cid/:pid', function(req, res){
     var mysql = req.app.get('mysql');
-    var sql = "UPDATE class SET professor = NULL WHERE id=?";
+    var sql = "UPDATE class SET professor = NULL WHERE course_id=?";
     var inserts = [req.params.cid];
     sql = mysql.pool.query(sql, inserts, function(error, results, fields){
         if (error) {
@@ -121,8 +152,8 @@ router.delete('/:cid/:pid', function(req, res){
         } else {
             res.status(202).end();
         }
-    })
-})
+    });
+});
 
 
 module.exports = router;

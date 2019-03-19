@@ -63,7 +63,7 @@ function getBuildings(res, mysql, context, complete) {
 }
 
 function getClasses(res, mysql, id, context, complete) {
-    sql = "SELECT C.course_name as Name, C.course_id AS id FROM class C";
+    var sql = "SELECT C.course_name as Name, C.course_id AS id FROM class C";
     insert = [id];
     mysql.pool.query(sql, insert, function(error, results, fields){
         if(error) {
@@ -77,6 +77,19 @@ function getClasses(res, mysql, id, context, complete) {
     })
 }
 
+function deleteStudentClasses(res, mysql, id, complete) {
+    var sql = "DELETE FROM students_classes WHERE student_id = ?"
+    var inserts = [id];
+    mysql.pool.query(sql, inserts, function(error, results, fields) {
+        if(error) {
+            console.log(error);
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            complete();
+        }
+    });
+}
 
 router.get('/', function(req, res){
     var callbackCount = 0;
@@ -155,7 +168,9 @@ router.post('/Modify', function(req, res){
 })
 
 router.delete('/:id', function(req, res){
+    var callbackCount = 0;
     var mysql = req.app.get('mysql');
+    deleteStudentClasses(res, mysql, req.params.id, complete);
     var sql = "DELETE FROM student WHERE student.id = ?"
     var inserts = [req.params.id];
     sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
@@ -164,9 +179,15 @@ router.delete('/:id', function(req, res){
             res.status(400);
             res.end();
         } else {
+            complete();
+        }
+    });
+    function complete() {
+        callbackCount++;
+        if(callbackCount>=2) {
             res.status(202).end();
         }
-    })
+    }
 });
 
 router.delete('/login/:cid/:sid', function(req, res){
@@ -175,12 +196,13 @@ router.delete('/login/:cid/:sid', function(req, res){
     var inserts = [req.params.sid,req.params.cid];
     sql = mysql.pool.query(sql, inserts, function(error, results, fields){
         if (error) {
+            console.log(error);
             res.write(JSON.stringify(error));
             res.status(400);
             res.end();
         } else {
             res.status(202).end();
         }
-    })
+    });
 });
 module.exports = router;
