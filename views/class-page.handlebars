@@ -1,0 +1,19 @@
+<h1>Modify {{class.name}}</h1>
+
+<form name='modify_class'action='/classes/modify' method='POST'>
+    Name of Course: <input type='text' name='course_modification_name' value='{{class.name}}'> <br>
+    Building Course is taught in: <select name="course_modification_building">
+        <option value='NULL' selected>N/A</option> 
+        {{#each buildings}}
+        <option value='{{name}}'>{{name}}</option>
+        {{/each}}
+    </select> <br>
+    Professor Teaching: <select name='course_modification_professor'>
+        <option value="NULL" selected>None</option>
+        {{#each professors}}
+        <option value='{{id}}'>{{name}}</option>
+        {{/each}}
+    </select> <br>
+    Department: <input type='text' name='course_modification_department' value='{{class.college}}'><br>
+    <input type='submit' value='Submit'>
+</form>

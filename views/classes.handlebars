@@ -36,19 +36,25 @@
             <td>
                 {{college}}
             </td>
+            <td>
+                <input type="button" onclick="location.href='classes/modify/{{id}}';" value = 'Modify'>
+            </td>
+            <td>
+                <button onclick="deleteClass({{id}})">Delete</button>
+            </td>
         </tr>
         {{/each}}
     </tbody>
 </table>
 
 <h3>Add Course</h3>
-<form name='add_class'action='/add' method='POST'>
+<form name='add_class'action='/classes/add' method='POST'>
     Name of Course: <input type='text' name='course_creation_name' value=''> <br>
     Building Course is taught in: <select name="course_creation_building">
         {{#each buildings}}
         <option value='{{name}}'>{{name}}</option>
         {{/each}}
-    </select>
+    </select> <br>
     Professor Teaching: <select name='course_creation_professor'>
         <option value="NULL">None</option>
         {{#each professors}}
