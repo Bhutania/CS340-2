@@ -1,6 +1,6 @@
-function deleteStudent(id) {
+function deleteClass(pid, cid) {
     $.ajax({
-        url: '/students/' + id,
+        url: '/professors/' + cid + '/' + pid,
         type: 'DELETE',
         success: function(result) {
             window.location.reload(true);

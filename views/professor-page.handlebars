@@ -1,0 +1,69 @@
+<h1>{{professor.name}}'s Page</h1>
+
+ID number: {{professor.id}} <br>
+Department: {{professor.college}} <br>
+Tenure Status: {{professor.tenured}} <br>
+Office Building: {{professor.building}} <br>
+Boss: {{professor.boss}}
+
+<h3>Classes</h3>
+<table>
+    <thead>
+        <th>
+            Course Name
+        </th> 
+        <th>
+            Course Reference number
+        </th>
+    </thead>
+    <tbody>
+        {{#each class}}
+        <tr>
+            <td>
+                {{name}}
+            </td>
+            <td>
+                {{id}}
+            </td>
+            <td>
+                <button onclick="deleteClass({{../professor.id}}, {{id}})">Drop</button>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody> 
+</table>
+
+<h3>Modify Professor</h3>
+<form id='modify_professor' action='/professors/Modify' method="POST">
+    Professor id: {{professor.id}} <br>
+    <input type = "hidden" name = 'professor_id' value = '{{professor.id}}'<br>
+    Name: <input name='professor_name' type="text" value='{{professor.name}}'> <br>
+    Department: <input name="professor_college" type="text" value='{{professor.college}}'><br>
+    Office Building: <select name='professor_signup_building'>
+        {{#each buildings}}
+            <option value="{{Name}}">{{Name}}</option>
+        {{/each}}
+        </select> <br>
+    Tenure status: <select name='professor_tenure_status'>
+            <option value="0">Untenured</option>
+            <option value="1">Tenured</option>
+        </select> <br>
+    Boss: <select name="professor_signup_boss">
+            <option value="NULL">None.</option> 
+            {{#each professors}}
+                <option value="{{id}}">{{name}}</option>
+            {{/each}}
+        </select>
+        <input type='submit' value="Submit">
+</form> 
+
+<h3>Signup to Teach A Course</h3>
+<form id='professor_course_signup' action='/professors/Classes' method="POST">
+<input type = "hidden" name = 'professor_id' value = '{{professor.id}}'>
+Course: <select name ='professor_class'>
+    {{#each classes}}
+    <option value="{{id}}">{{name}}</option>
+    {{/each}}
+</select> 
+<input type='submit' value="Submit">
+</form> 
