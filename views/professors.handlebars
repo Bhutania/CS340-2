@@ -1,13 +1,22 @@
 <h1>All Professors</h1>
-<br>
 <h3>Sign Up:</h3>
 <form id="signup" action='/professors' method="POST">
-Name: <input id='name' type= "text" name ='student_signup_name' value =""> <br>
-Major: <input id='major' type="text" name ='student_signup_major' value =''><br>
-Residence Hall <select name='student_signup_building'>
+Name: <input id='name' type= "text" name ='professor_signup_name' value =""> <br>
+College: <input id='major' type="text" name ='professor_signup_major' value =''><br>
+Office Building: <select name='professor_signup_building'>
     {{#each buildings}}
-    <option value="{{Name}}">{{Name}}</option>
+        <option value="{{Name}}">{{Name}}</option>
     {{/each}}
+    </select> <br>
+Tenure status: <select name='professor_tenure_status'>
+        <option value="0">Untenured</option>
+        <option value="1">Tenured</option>
+    </select> <br>
+Boss: <select name="professor_signup_boss">
+        <option value="NULL">None.</option> 
+        {{#each professors}}
+            <option value="{{id}}">{{name}}</option>
+        {{/each}}
     </select>
     <input type="submit" value="Submit">
 </form>
@@ -19,26 +28,26 @@ Residence Hall <select name='student_signup_building'>
             Name
         </th>
         <th>
-            Major
+            College
         </th>
         <th>
-            Residence Hall
+            Office Building
         </th>
     </thead>
     <tbody>
         {{#each professors}}
         <tr>
             <td>
-                <a href="professors/{{id}}">{{name}}</a>
+                <a href="/professors/{{id}}">{{name}}</a>
             </td>
             <td>
-                {{Major}}
+                {{college}}
             </td> 
             <td>
-                {{Building}}
+                {{building}}
             </td>
             <td>
-                <button onclick="deleteStudent({{id}})">Remove</button>
+                <button onclick="deleteProfessor({{id}})">Remove</button>
             </td>
         </tr>
         {{/each}}
