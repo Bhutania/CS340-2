@@ -69,13 +69,25 @@ function getClass(res, mysql, context, complete) {
     })
 }
 
-
+function removeProfessorClasses(res, mysql, id, complete) {
+    var sql = "UPDATE class SET professor = NULL WHERE professor = ?"
+    var inserts = [id];
+    mysql.pool.query(sql, inserts, function(error, results, fields){
+        if (error) {
+            console.log(JSON.stringify(error));
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            complete();
+        }
+    })
+}
 
 
 router.get('/', function(req, res){
     var callbackCount = 0;
     var context = {};
-    context.jsscripts = [];
+    context.jsscripts = ["deleteProfessor.js"];
     var mysql = req.app.get('mysql');
     getProfessors(res, mysql, context, complete);
     getBuildings(res, mysql, context, complete);
@@ -139,6 +151,30 @@ router.post('/Classes', function(req, res){
         }
     });
 });
+
+router.delete('/:pid', function(req, res){
+    var callBackCount = 0;
+    var mysql = req.app.get('mysql');
+    removeProfessorClasses(res, mysql, req.params.pid, complete);
+    var sql = "DELETE FROM professor WHERE id = ?"
+    var inserts = [req.params.pid];
+    sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+        if (error) {
+            console.log(JSON.stringify(error));
+            res.write(JSON.stringify(error));
+            res.status(400);
+            res.end();
+        } else {
+            complete();
+        }
+    });
+    function complete() {
+        callBackCount++;
+        if(callBackCount >= 2) {
+            res.status(202).end();
+        }
+    }
+})
 
 router.delete('/:cid/:pid', function(req, res){
     var mysql = req.app.get('mysql');

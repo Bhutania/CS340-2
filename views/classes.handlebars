@@ -1,0 +1,60 @@
+<h1>Classes Page</h1>
+<h3>All Classes</h3>
+<table>
+    <thead>
+        <th>
+            Class Name
+        </th>
+        <th>
+            Course Reference Number
+        </th>
+        <th>
+            Building
+        </th>
+        <th>
+            Professor Teaching Course
+        </th>
+        <th>
+            Department
+        </th>
+    </thead>
+    <tbody>
+        {{#each classes}}
+        <tr>
+            <td>
+                {{name}}
+            </td>
+            <td>
+                {{id}}
+            </td>
+            <td>
+                {{location}}
+            </td>
+            <td>
+                {{professor}}
+            </td>
+            <td>
+                {{college}}
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<h3>Add Course</h3>
+<form name='add_class'action='/add' method='POST'>
+    Name of Course: <input type='text' name='course_creation_name' value=''> <br>
+    Building Course is taught in: <select name="course_creation_building">
+        {{#each buildings}}
+        <option value='{{name}}'>{{name}}</option>
+        {{/each}}
+    </select>
+    Professor Teaching: <select name='course_creation_professor'>
+        <option value="NULL">None</option>
+        {{#each professors}}
+        <option value='{{id}}'>{{name}}</option>
+        {{/each}}
+    </select> <br>
+    Department: <input type='text' name='course_creation_department' value=''><br>
+    <input type='submit' value='Submit'>
+</form>

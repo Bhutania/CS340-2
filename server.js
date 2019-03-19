@@ -23,6 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
 app.all(myLogger);
+app.use('/classes', require('./classes.js'));
 app.use('/professors', require('./professors.js'));
 app.use('/students', require('./students.js'));
 app.use('/', express.static('public'));

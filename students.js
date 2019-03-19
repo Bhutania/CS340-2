@@ -116,9 +116,10 @@ router.get('/login', function(req, res){
     getStudentClasses(res, mysql, context, req.query.student_login_id_value, complete);
     getStudent(res, mysql, context, req.query.student_login_id_value, complete);
     getClasses(res, mysql, req.query.student_login_id_value, context, complete);
+    getBuildings(res, mysql, context, complete);
     function complete(){
         callbackCount++;
-        if(callbackCount >= 3){
+        if(callbackCount >= 4){
             res.render('student-page', context);
         }
     }
