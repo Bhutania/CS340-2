@@ -1,0 +1,37 @@
+<h1>{{buildings.name}}'s Page</h1>
+
+Rooms: {{buildings.rooms}} <br>
+
+<h3>Enrolled Classes:</h3>
+<table>
+    <thead>
+        <th>
+            Course Name
+        </th>
+        <th>
+            Course Reference Number
+        </th>
+    </thead>
+    <tbody>
+        {{#each classes}}
+        <tr>
+            <td>
+                {{Name}}
+            </td>
+            <td>
+                {{id}}
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<br>
+
+<h3>Modify Building</h3>
+<form id='modify_building' action='/buildings/Modify' method="POST">
+    Building Name: {{buildings.name}} <br>
+    <input type = "hidden" name = 'building_name' value = '{{buildings.name}}'<br>
+    Major: <input name="building_rooms" type="text" value='{{buildings.rooms}}'><br>
+    <input type='submit' value="Submit">
+</form> 
