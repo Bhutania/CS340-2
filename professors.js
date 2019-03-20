@@ -42,6 +42,18 @@ function getProfessor(res, mysql, id, context, complete) {
     });
 }
 
+function getProfessorsLike(req, res, mysql, context, complete) {
+    var query = "SELECT P.id as id, P.name as name, P.college AS college, P.tenured AS tenured, P.building AS building, P.boss AS boss FROM professor P WHERE P.name LIKE" + mysql.pool.escape(req.params.id + '%');
+    mysql.pool.query(query, function(error, results, fields) {
+        if(error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.professors = results;
+        complete();
+    })
+}
+
 function getClasses(res, mysql, id, context, complete) {
     var sql = "SELECT C.course_id as id, C.course_name as name FROM class C INNER JOIN professor P ON P.id = C.professor WHERE P.id = ?"
     var inserts =[id];
@@ -87,7 +99,7 @@ function removeProfessorClasses(res, mysql, id, complete) {
 router.get('/', function(req, res){
     var callbackCount = 0;
     var context = {};
-    context.jsscripts = ["deleteProfessor.js"];
+    context.jsscripts = ["deleteProfessor.js", "searchProfessor.js"];
     var mysql = req.app.get('mysql');
     getProfessors(res, mysql, context, complete);
     getBuildings(res, mysql, context, complete);
@@ -98,6 +110,10 @@ router.get('/', function(req, res){
         }
     }
 });
+
+router.get('/search/', function(req, res) {
+    res.redirect('/professors');
+})
 
 router.get('/:id', function(req, res){
     callbackCount = 0;
@@ -121,6 +137,22 @@ router.get('/:id', function(req, res){
         }
     }
 });
+
+router.get('/search/:id', function(req, res) {
+    var callbackCount = 0;
+    var context = {};
+    context.jsscripts = ["deleteProfessor.js", "searchProfessor.js"];
+    var mysql = req.app.get('mysql');
+    getProfessorsLike(req, res, mysql, context, complete);
+    getBuildings(res, mysql, context, complete);
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 2) {
+            res.render('professors', context)
+        }
+    }
+})
+
 
 router.post('/', function(req, res){
     var mysql = req.app.get('mysql');

@@ -23,6 +23,12 @@ Boss: <select name="professor_signup_boss">
     <input type="submit" value="Submit">
 </form>
 <br>
+<br>
+<form id='search_classes' action='' method=''>
+    <label> Search Classes by Name:</label>
+    <input id='name_search_string' type='text' name='name_search_string' value=''>
+    <input type="button" value="Search" onclick="searchProfessorByName()">
+</form>
 <h3>All Professors</h3>
 <table>
     <thead>

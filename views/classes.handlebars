@@ -1,4 +1,12 @@
 <h1>Classes Page</h1>
+
+
+<form id='search_classes' action='' method=''>
+    <label> Search Classes by Name:</label>
+    <input id='name_search_string' type='text' name='name_search_string' value=''>
+    <input type="button" value="Search" onclick="searchClassByName()">
+</form>
+
 <h3>All Classes</h3>
 <table>
     <thead>
@@ -56,7 +64,7 @@
         {{/each}}
     </select> <br>
     Professor Teaching: <select name='course_creation_professor'>
-        <option value="NULL">None</option>
+        <option value="NULL">N/A</option>
         {{#each professors}}
         <option value='{{id}}'>{{name}}</option>
         {{/each}}

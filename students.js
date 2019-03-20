@@ -48,6 +48,18 @@ function getStudent(res, mysql, context, id, complete) {
     });
 }
 
+function getStudentsLike(req, res, mysql, context, complete) {
+    var query = "SELECT S.id as id, S.name as Name, S.major AS Major, S.building AS Building FROM student S WHERE S.name LIKE" + mysql.pool.escape(req.params.id + '%');
+    mysql.pool.query(query, function(error, results, fields) {
+        if(error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.students = results;
+        complete();
+    })
+}
+
 function getBuildings(res, mysql, context, complete) {
     var sql = "SELECT B.name as Name FROM buildings B"
     mysql.pool.query(sql, function(error, results, fields) {
@@ -94,7 +106,7 @@ function deleteStudentClasses(res, mysql, id, complete) {
 router.get('/', function(req, res){
     var callbackCount = 0;
     var context = {};
-    context.jsscripts = ["deleteStudent.js"];
+    context.jsscripts = ["deleteStudent.js", "searchStudent.js"];
     var mysql = req.app.get('mysql');
     getStudents(res, mysql, context, complete);
     getBuildings(res, mysql, context, complete);
@@ -124,6 +136,25 @@ router.get('/login', function(req, res){
         }
     }
 });
+
+router.get('/search/', function(req, res) {
+    res.redirect('/students');
+})
+
+router.get('/search/:id', function(req, res) {
+    var callbackCount = 0;
+    var context = {};
+    context.jsscripts = ["deleteStudent.js", "searchStudent.js"];
+    var mysql = req.app.get('mysql');
+    getStudentsLike(req, res, mysql, context, complete);
+    getBuildings(res, mysql, context, complete);
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 2) {
+            res.render('students', context)
+        }
+    }
+})
 
 router.post('/', function(req, res){
     var mysql = req.app.get('mysql');
