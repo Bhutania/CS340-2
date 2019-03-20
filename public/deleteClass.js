@@ -1,5 +1,5 @@
 function deleteClass(id) {
-    $.ajax({
+    	$.ajax({
         url: '/classes/' + id,
         type: 'DELETE',
         success: function(result) {

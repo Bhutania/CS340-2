@@ -89,15 +89,14 @@ router.post('/add', function(req, res){
     });
 });
 
-router.delete('/:Name', function(req, res){
-    console.log("HELP");
-	var callBackCount = 0;
+router.delete('/:name', function(req, res){
+    var callbackCount = 0;
     var mysql = req.app.get('mysql');
-    deleteBuildingStudent(res, mysql, req.params.Name, complete);
-    deleteBuildingProfessor(res, mysql, req.params.Name, complete);
-    deleteBuildingClass(res, mysql, req.params.Name, complete);
+    removeBuildingStudent(res, mysql, req.params.name, complete);
+    removeBuildingProfessor(res, mysql, req.params.name, complete);
+    removeBuildingClass(res, mysql, req.params.name, complete);
     var sql = "DELETE FROM building WHERE name = ?"
-    var inserts = [req.params.Name];
+    var inserts = [req.params.name];
     sql = mysql.pool.query(sql, inserts, function(error, results, fields){
         if (error) {
             //console.log(JSON.stringify(error));
@@ -109,8 +108,8 @@ router.delete('/:Name', function(req, res){
         }
     });
     function complete() {
-        callBackCount++;
-        if(callBackCount >= 1) {
+        callbackCount++;
+        if(callbackCount >= 4) {
             res.status(202).end();
         }
     }
