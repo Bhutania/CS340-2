@@ -13,13 +13,21 @@
         {{#each buildings}}
         <tr>
             <td>
-
+                {{Name}}
+            </td>
+            <td>
+                {{Rooms}}
+            </td>
 	    <td>
-	    	<button onclick="deleteBuilding{{Name}}">Delete</button>
+	    	<button onclick="deleteBuildings({{Name}})">Delete</button>
 		</td>
 	</tr>
-
         {{/each}}
     </tbody>
 </table>
-
+<h3>New Building</h3>
+<form name='add_building' action='/buildings/add' method='POST'>
+	Building Name: <input type='text' name='building_creation_name' value=''><br>
+	Number of Rooms: <input type='number' name='building_creation_rooms' value=''><br>
+	<input type='submit' value='Submit'>
+</form>
