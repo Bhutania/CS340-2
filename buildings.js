@@ -95,7 +95,7 @@ router.delete('/:name', function(req, res){
     removeBuildingStudent(res, mysql, req.params.name, complete);
     removeBuildingProfessor(res, mysql, req.params.name, complete);
     removeBuildingClass(res, mysql, req.params.name, complete);
-    var sql = "DELETE FROM building WHERE name = ?"
+    var sql = "DELETE FROM buildings WHERE name = ?"
     var inserts = [req.params.name];
     sql = mysql.pool.query(sql, inserts, function(error, results, fields){
         if (error) {
