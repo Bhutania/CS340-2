@@ -26,6 +26,7 @@ app.all(myLogger);
 app.use('/classes', require('./classes.js'));
 app.use('/professors', require('./professors.js'));
 app.use('/students', require('./students.js'));
+app.use('/buildings', require('./buildings.js'));
 app.use('/', express.static('public'));
 
 app.use(function(req,res){

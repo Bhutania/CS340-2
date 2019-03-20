@@ -1,0 +1,38 @@
+<h1>Building Page</h1>
+<h3>All Buildings</h3>
+<table>
+    <thead>
+        <th>
+            Building Name
+        </th>
+        <th>
+            Number of Rooms
+        </th>
+    </thead>
+    <tbody>
+        {{#each buildings}}
+        <tr>
+            <td>
+                {{name}}
+            </td>
+            <td>
+                {{rooms}}
+            </td>
+    <!--       <td>
+                <input type="button" onclick="location.href='buildings/modify/{{name}}';" value = 'Modify'>
+            </td>
+            <td>
+                <button onclick="deleteBuilding({{id}})">Delete</button>
+            </td> -->
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<!--
+<h3>New Building</h3>
+<form name='add_building' action='/buildings/add' method='POST'>
+    Building Name: <input type='text' name='building_creation_name' value=''> <br>
+    Number of Rooms: <input type='text' name='building_creation_department' value=''><br>
+    <input type='submit' value='Submit'>
+</form> -->
