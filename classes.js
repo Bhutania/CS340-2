@@ -67,10 +67,22 @@ function deleteStudentClasses(res, mysql, id, complete) {
     })
 }
 
+function getClassesLike(req, res, mysql, context, complete) {
+    var query = "SELECT C.course_id AS id, C.course_name AS name, C.college AS college, P.name AS professor, C.building_name AS location FROM class C LEFT JOIN professor P ON P.id = C.professor WHERE C.course_name LIKE" + mysql.pool.escape(req.params.id + '%');
+    mysql.pool.query(query, function(error, results, fields) {
+        if(error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.classes = results;
+        complete();
+    })
+}
+
 router.get('/', function(req, res){
     var callbackCount = 0;
     var context = {};
-    context.jsscripts = ["deleteClass.js"];
+    context.jsscripts = ["deleteClass.js", "searchClass.js"];
     var mysql = req.app.get('mysql');
     getClasses(res, mysql, context, complete);
     getBuilding(res, mysql, context, complete);
@@ -94,6 +106,26 @@ router.get('/modify/:id', function(req, res) {
         callbackCount++;
         if(callbackCount >= 3) {
             res.render('class-page', context);
+        }
+    }
+});
+
+router.get('/search/', function(req, res) {
+    res.redirect('/classes/')
+})
+
+router.get('/search/:id', function(req, res) {
+    var callbackCount = 0;
+    var context = {};
+    context.jsscripts = ["deleteClass.js", "searchClass.js"];
+    var mysql = req.app.get('mysql');
+    getClassesLike(req, res, mysql, context, complete);
+    getBuilding(res, mysql, context, complete);
+    getProfessors(res, mysql, context, complete);
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 3) {
+            res.render('classes', context)
         }
     }
 })

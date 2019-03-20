@@ -17,7 +17,13 @@ Residence Hall <select name='student_signup_building'>
     <input type="submit" value="Submit">
 </form>
 <br>
-<h3>All Students</h3>
+<br>
+<form id='search_classes' action='' method=''>
+    <label> Search Classes by Name:</label>
+    <input id='name_search_string' type='text' name='name_search_string' value=''>
+    <input type="button" value="Search" onclick="searchStudentByName()">
+</form>
+<h3>Students</h3>
 <table>
     <thead>
         <th>
