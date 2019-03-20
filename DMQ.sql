@@ -74,5 +74,40 @@ UPDATE class SET professor = NULL WHERE course_id=?
 -- getClasses
 SELECT C.course_name AS name, C.college AS college, P.name AS professor, C.building_name AS location FROM class C INNER JOIN professor P ON P.id = C.professor
 
---
+--getClass
+SELECT C.course_id AS id, C.course_name AS name, C.college AS college, P.name AS professor, C.building_name AS location FROM class C LEFT JOIN professor P ON P.id = C.professor WHERE C.course_id = ?
+
+--deleteStudentClasses
+DELETE FROM students_classes WHERE class_id = ?
+
+--getClassesLike
+SELECT C.course_id AS id, C.course_name AS name, C.college AS college, P.name AS professor, C.building_name AS location FROM class C LEFT JOIN professor P ON P.id = C.professor WHERE C.course_name LIKE + mysql.pool.escape(req.params.id + '%')
+
+-- add class
+INSERT INTO class (course_name, college, professor, building_name) VALUES (?, ?, ?, ?)
+
+--modify id
+UPDATE class SET course_name = ?, college = ?, professor = ?, building_name = ? WHERE course_id = ?
+
+--delete class
+DELETE FROM class WHERE course_id = ?
+
+-- ----------- Buildings -----------------
+--removeBuildingStudent
+UPDATE student SET building = NULL WHERE building= ?
+
+--removeBuildingProfessor
+UPDATE professor SET building = NULL WHERE building= ?
+
+--removeBuildingClass
+UPDATE class SET building_name = NULL WHERE building_name = ?
+
+--Add building
+INSERT INTO buildings (name, rooms) VALUES (?, ?)
+
+--delete building
+DELETE FROM buildings WHERE name = ?
+
+
+
 
