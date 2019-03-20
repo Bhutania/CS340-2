@@ -2,7 +2,7 @@
 
 
 <form id='search_classes' action='' method=''>
-    <label> Search Classes by Name:</label>
+    <label> Search Classes by Name:</label> <br>
     <input id='name_search_string' type='text' name='name_search_string' value=''>
     <input type="button" value="Search" onclick="searchClassByName()">
 </form>
@@ -24,6 +24,12 @@
         </th>
         <th>
             Department
+        </th>
+        <th>
+            Modify
+        </th>
+        <th>
+            Delete
         </th>
     </thead>
     <tbody>
@@ -57,18 +63,18 @@
 
 <h3>Add Course</h3>
 <form name='add_class'action='/classes/add' method='POST'>
-    Name of Course: <input type='text' name='course_creation_name' value=''> <br>
-    Building Course is taught in: <select name="course_creation_building">
+    Name of Course: <br> <input type='text' name='course_creation_name' value=''> <br>
+    Building Course is taught in:<br> <select name="course_creation_building">
         {{#each buildings}}
         <option value='{{name}}'>{{name}}</option>
         {{/each}}
     </select> <br>
-    Professor Teaching: <select name='course_creation_professor'>
+    Professor Teaching:<br> <select name='course_creation_professor'>
         <option value="NULL">N/A</option>
         {{#each professors}}
         <option value='{{id}}'>{{name}}</option>
         {{/each}}
     </select> <br>
-    Department: <input type='text' name='course_creation_department' value=''><br>
+    Department:<br> <input type='text' name='course_creation_department' value=''><br>
     <input type='submit' value='Submit'>
 </form>
