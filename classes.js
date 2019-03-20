@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 function getClasses(res, mysql, context, complete) {
-    var sql = "SELECT C.course_id AS id, C.course_name AS name, C.college AS college, P.name AS professor, C.building_name AS location FROM class C INNER JOIN professor P ON P.id = C.professor";
+    var sql = "SELECT C.course_id AS id, C.course_name AS name, C.college AS college, P.name AS professor, C.building_name AS location FROM class C LEFT JOIN professor P ON P.id = C.professor";
     mysql.pool.query(sql, function(error, results, fields){
         if (error) {
             res.write(JSON.stringify(error));
@@ -15,7 +15,7 @@ function getClasses(res, mysql, context, complete) {
 };
 
 function getClass(res, mysql, id, context, complete) {
-    var sql = "SELECT C.course_id AS id, C.course_name AS name, C.college AS college, P.name AS professor, C.building_name AS location FROM class C INNER JOIN professor P ON P.id = C.professor WHERE C.course_id = ?";
+    var sql = "SELECT C.course_id AS id, C.course_name AS name, C.college AS college, P.name AS professor, C.building_name AS location FROM class C LEFT JOIN professor P ON P.id = C.professor WHERE C.course_id = ?";
     var inserts = [id];
     sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
         if (error) {
@@ -67,10 +67,22 @@ function deleteStudentClasses(res, mysql, id, complete) {
     })
 }
 
+function getClassesLike(req, res, mysql, context, complete) {
+    var query = "SELECT C.course_id AS id, C.course_name AS name, C.college AS college, P.name AS professor, C.building_name AS location FROM class C LEFT JOIN professor P ON P.id = C.professor WHERE C.course_name LIKE" + mysql.pool.escape(req.params.id + '%');
+    mysql.pool.query(query, function(error, results, fields) {
+        if(error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.classes = results;
+        complete();
+    })
+}
+
 router.get('/', function(req, res){
     var callbackCount = 0;
     var context = {};
-    context.jsscripts = ["deleteClass.js"];
+    context.jsscripts = ["deleteClass.js", "searchClass.js"];
     var mysql = req.app.get('mysql');
     getClasses(res, mysql, context, complete);
     getBuilding(res, mysql, context, complete);
@@ -96,12 +108,38 @@ router.get('/modify/:id', function(req, res) {
             res.render('class-page', context);
         }
     }
+});
+
+router.get('/search/', function(req, res) {
+    res.redirect('/classes/')
+})
+
+router.get('/search/:id', function(req, res) {
+    var callbackCount = 0;
+    var context = {};
+    context.jsscripts = ["deleteClass.js", "searchClass.js"];
+    var mysql = req.app.get('mysql');
+    getClassesLike(req, res, mysql, context, complete);
+    getBuilding(res, mysql, context, complete);
+    getProfessors(res, mysql, context, complete);
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 3) {
+            res.render('classes', context)
+        }
+    }
 })
 
 router.post('/add', function(req, res){
     var mysql = req.app.get('mysql');
+
     var sql = "INSERT INTO class (course_name, college, professor, building_name) VALUES (?, ?, ?, ?)"
     var inserts = [req.body.course_creation_name, req.body.course_creation_department, req.body.course_creation_professor, req.body.course_creation_building];
+    if (req.body.course_creation_professor = "NULL") {
+        sql = "INSERT INTO class (course_name, college, professor, building_name) VALUES (?, ?, NULL, ?)"
+        inserts = [req.body.course_creation_name, req.body.course_creation_department, req.body.course_creation_building];
+
+    }
     sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
@@ -111,6 +149,31 @@ router.post('/add', function(req, res){
         }
     });
 });
+
+router.post('/modify/:id', function(req, res) {
+    var mysql = req.app.get('mysql');
+    var sql = "UPDATE class SET course_name = ?, college = ?, professor = ?, building_name = ? WHERE course_id = ?"
+    var inserts = [req.body.course_modification_name, req.body.course_modification_department, req.body.course_modification_professor, req.body.course_modification_building, req.params.id];
+    if(req.body.course_modification_professor = 'NULL') {
+        sql = "UPDATE class SET course_name = ?, college = ?, professor = NULL, building_name = ? WHERE course_id = ?";
+        inserts = [req.body.course_modification_name, req.body.course_modification_department, req.body.course_modification_building, req.params.id];
+        if (req.body.course_modification_building = 'NULL') {
+            sql = "UPDATE class SET course_name = ?, college = ?, professor = NULL, building_name = NULL WHERE course_id = ?"
+            inserts = [req.body.course_modification_name, req.body.course_modification_department, req.params.id];
+        }
+    } else if (req.body.course_modification_building = 'NULL') {
+        sql = "UPDATE class SET course_name = ?, college = ?, professor = ?, building_name = NULL WHERE course_id = ?"
+        inserts = [req.body.course_modification_name, req.body.course_modification_professor, req.body.course_modification_department, req.params.id];
+    }
+    mysql.pool.query(sql, inserts, function(error, results, fields) {
+        if(error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.redirect('/classes');
+        }
+    })
+})
 
 router.delete('/:id', function(req, res){
     var callBackCount = 0;

@@ -1,6 +1,6 @@
 <h1>Modify {{class.name}}</h1>
 
-<form name='modify_class'action='/classes/modify' method='POST'>
+<form name='modify_class'action='/classes/modify/{{class.id}}' method='POST'>
     Name of Course: <input type='text' name='course_modification_name' value='{{class.name}}'> <br>
     Building Course is taught in: <select name="course_modification_building">
         <option value='NULL' selected>N/A</option> 
@@ -9,7 +9,7 @@
         {{/each}}
     </select> <br>
     Professor Teaching: <select name='course_modification_professor'>
-        <option value="NULL" selected>None</option>
+        <option value='NULL' selected>None</option>
         {{#each professors}}
         <option value='{{id}}'>{{name}}</option>
         {{/each}}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h1>Building Page</h1>
 <h3>All Buildings</h3>
 <table>
@@ -31,3 +32,30 @@
 	Number of Rooms: <input type='number' name='building_creation_rooms' value=''><br>
 	<input type='submit' value='Submit'>
 </form>
+=======
+<h1>Building Page</h1>
+<h3>All Buildings</h3>
+<table>
+    <thead>
+        <th>
+            Building Name
+        </th>
+        <th>
+            Number of Rooms
+        </th>
+    </thead>
+    <tbody>
+        {{#each buildings}}
+        <tr>
+            <td>
+
+	    <td>
+	    	<button onclick="deleteBuilding{{Name}}">Delete</button>
+		</td>
+	</tr>
+
+        {{/each}}
+    </tbody>
+</table>
+
+>>>>>>> 7f99f3183bb065efb1cc11265af37387a6e3ae33
