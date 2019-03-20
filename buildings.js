@@ -46,7 +46,7 @@ function removeBuildingProfessor(res, mysql, name, complete){
 
 
 function removeBuildingClass(res, mysql, name, complete){
-	var sql = "UPDATE class SET building = NULL WHERE building= ?"
+	var sql = "UPDATE class SET building_name = NULL WHERE building_name = ?"
 	var inserts = [name];
 	mysql.pool.query(sql,inserts,function(error,results,fields){
 	   if (error){
