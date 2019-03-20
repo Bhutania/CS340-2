@@ -6,9 +6,16 @@
     {{#each jsscripts}}
     <script src="/{{this}}"></script>
     {{/each}}
+    <link href="/style.css" rel="stylesheet">
 </head>
 <body>
-    <a href="/">Return to Index</a>
+    <ul id='nav-bar'>
+        <li><a href="/">Return to Index</a></li>
+        <li><a href='/classes'>Classes</a></li>
+        <li><a href='/professors'>Professors</a></li>
+        <li><a href='/suilings'>Buildings</a></li>
+        <li><a href='/students'>Students</a></li>
+    </ul>
 	{{{body}}}
 </body>
 </html>
